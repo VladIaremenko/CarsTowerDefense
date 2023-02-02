@@ -1,15 +1,14 @@
-﻿using UnityEngine;
-using Assets.Scripts.MonsterLogic;
+﻿using Assets.Scripts.MonsterLogic;
 using System.Collections;
+using UnityEngine;
 
-namespace Assets.Scripts.CannonLogic
+namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTower : MonoBehaviour
+    public abstract class Tower : MonoBehaviour
     {
-        [SerializeField] private float _shootInterval = 0.5f;
-        [SerializeField] private float _range = 4f;
-        [SerializeField] private GameObject _projectilePrefab;
-        [SerializeField] private Transform _shootPoint;
+        [SerializeField] protected float _shootInterval = 0.5f;
+        [SerializeField] protected float _range = 4f;
+        [SerializeField] protected Transform _shootPointOrigin;
 
         private void Start()
         {
@@ -25,11 +24,13 @@ namespace Assets.Scripts.CannonLogic
                     if (Vector3.Distance(transform.position, monster.transform.position) > _range)
                         continue;
 
-                    Instantiate(_projectilePrefab, _shootPoint.position, _shootPoint.rotation);
+                    Shoot();
                 }
 
                 yield return new WaitForSeconds(_shootInterval);
             }
         }
+
+        public abstract void Shoot();
     }
 }

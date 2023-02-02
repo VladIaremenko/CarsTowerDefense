@@ -1,23 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Assets.Scripts.MonsterLogic;
 
-public class Spawner : MonoBehaviour {
-	public float m_interval = 3;
-	public GameObject m_moveTarget;
+namespace Assets.Scripts.MonsterLogic
+{
+    public class Spawner : MonoBehaviour
+    {
+        [SerializeField] private float _interval = 3;
+        [SerializeField] private GameObject _moveTarget;
+        [SerializeField] private Monster _monsterPrefab;
 
-	private float m_lastSpawn = -1;
+        private void Start ()
+        {
+            StartCoroutine(SpawnCoroutine());
+        }
 
-	void Update () {
-		if (Time.time > m_lastSpawn + m_interval) {
-			var newMonster = GameObject.CreatePrimitive (PrimitiveType.Capsule);
-			var r = newMonster.AddComponent<Rigidbody> ();
-			r.useGravity = false;
-			newMonster.transform.position = transform.position;
-			var monsterBeh = newMonster.AddComponent<Monster> ();
-			monsterBeh.m_moveTarget = m_moveTarget;
+        private IEnumerator SpawnCoroutine()
+        {
+            while (true)
+            {
+                var monster = Instantiate(_monsterPrefab, transform);
 
-			m_lastSpawn = Time.time;
-		}
-	}
+                monster.transform.position = transform.position;
+                monster._moveTarget = _moveTarget;
+
+                yield return new WaitForSeconds(_interval);
+            }
+        }
+    }
 }
