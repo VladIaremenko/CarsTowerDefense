@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
@@ -9,12 +10,8 @@ namespace Assets.Scripts.TowerLogic
 
         public override void Shoot(Transform target)
         {
-           _cannonYAxisRotator.LookAt(new Vector3(
-                target.position.x,
-                _cannonYAxisRotator.position.y,
-                target.position.z));
-
-            _cannonXAxixRotator.LookAt(target);
+            _cannonYAxisRotator.DOLookAt(target.position, _towerModel.ShootInterval, AxisConstraint.Y);
+            _cannonXAxixRotator.DOLookAt(target.position, _towerModel.ShootInterval);
 
             var projectile = Instantiate(_towerModel.ProjectilePrefab, _shootPointOrigin.position, _shootPointOrigin.rotation);
 
