@@ -1,17 +1,19 @@
 ﻿using Assets.Scripts.MonsterLogic;
 using UnityEngine;
 
-namespace Assets.Scripts.CannonLogic
+namespace Assets.Scripts.ProjectileLogic
 {
-    public class CannonProjectile : MonoBehaviour
+    public abstract class Projectile : MonoBehaviour
     {
-        [SerializeField] private float _speed = 0.2f;
-        [SerializeField] private int _damage = 10;
+        [SerializeField] protected float _speed = 0.2f;
+        [SerializeField] protected int _damage = 10;
 
-        private void Update()
+        private void FixedUpdate()
         {
-            transform.Translate(transform.forward * _speed);
+            Move();
         }
+
+        public abstract void Move();
 
         private void OnTriggerEnter(Collider other)
         {

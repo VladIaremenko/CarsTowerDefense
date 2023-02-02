@@ -1,31 +1,35 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Assets.Scripts.MonsterLogic;
+using System.Collections;
 
-public class CannonTower : MonoBehaviour {
-	public float m_shootInterval = 0.5f;
-	public float m_range = 4f;
-	public GameObject m_projectilePrefab;
-	public Transform m_shootPoint;
+namespace Assets.Scripts.CannonLogic
+{
+    public class CannonTower : MonoBehaviour
+    {
+        [SerializeField] private float _shootInterval = 0.5f;
+        [SerializeField] private float _range = 4f;
+        [SerializeField] private GameObject _projectilePrefab;
+        [SerializeField] private Transform _shootPoint;
 
-	private float m_lastShotTime = -0.5f;
+        private void Start()
+        {
+            StartCoroutine(ShootCouroutine());
+        }
 
-	void Update () {
-		if (m_projectilePrefab == null || m_shootPoint == null)
-			return;
+        private IEnumerator ShootCouroutine()
+        {
+            while (true)
+            {
+                foreach (var monster in FindObjectsOfType<Monster>())
+                {
+                    if (Vector3.Distance(transform.position, monster.transform.position) > _range)
+                        continue;
 
-		foreach (var monster in FindObjectsOfType<Monster>()) {
-			if (Vector3.Distance (transform.position, monster.transform.position) > m_range)
-				continue;
+                    Instantiate(_projectilePrefab, _shootPoint.position, _shootPoint.rotation);
+                }
 
-			if (m_lastShotTime + m_shootInterval > Time.time)
-				continue;
-
-			// shot
-			Instantiate(m_projectilePrefab, m_shootPoint.position, m_shootPoint.rotation);
-
-			m_lastShotTime = Time.time;
-		}
-
-	}
+                yield return new WaitForSeconds(_shootInterval);
+            }
+        }
+    }
 }
