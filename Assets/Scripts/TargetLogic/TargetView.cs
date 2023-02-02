@@ -12,10 +12,20 @@ namespace Assets.Scripts.TargetLogic
 
         private TargetController _targetController;
 
-        private void Start ()
+        private void Start()
         {
             _targetModel = _factory.GetItemClone(_targetModel);
-            _targetController = new TargetController( _targetModel, this);
+            _targetController = new TargetController(_targetModel, this);
+        }
+
+        private void OnEnable()
+        {
+            _targetController?.Refresh();
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(_targetModel);
         }
 
         public void HandleDamage(int damage)
@@ -32,7 +42,7 @@ namespace Assets.Scripts.TargetLogic
         {
             if (Vector3.Distance(transform.position, MoveTarget.position) <= _targetModel._reachDistance)
             {
-                Destroy(gameObject);
+                Destroy();
                 return;
             }
 
@@ -43,8 +53,7 @@ namespace Assets.Scripts.TargetLogic
 
         public void Destroy()
         {
-            Destroy(_targetModel);
-            Destroy(gameObject);
+            ObjectPooler.Destroy(gameObject);
         }
     }
 }

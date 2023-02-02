@@ -20,9 +20,9 @@ namespace Assets.Scripts.ProjectileLogic
 
         private void CheckIfTargetIsNul()
         {
-            if (Target == null)
+            if (!Target.gameObject.activeInHierarchy)
             {
-                Destroy(gameObject);
+                ObjectPooler.Destroy(gameObject);
             }
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Scripts.ProjectileLogic
             if (other.TryGetComponent(out IDamagable damagable))
             {
                 damagable.HandleDamage(_damage);
-                Destroy(gameObject);
+                ObjectPooler.Destroy(gameObject);
             }
         }
     }

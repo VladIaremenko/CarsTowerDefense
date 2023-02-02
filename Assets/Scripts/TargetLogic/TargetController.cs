@@ -13,6 +13,11 @@ namespace Assets.Scripts.TargetLogic
             _targetModel = targetModel;
             _targetView = targetView;
 
+            Refresh();
+        }
+
+        public void Refresh()
+        {
             _targetModel.CurrentHP = _targetModel.MaxHP;
         }
 

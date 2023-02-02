@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Assets.Scripts.ProjectileLogic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
@@ -13,7 +14,7 @@ namespace Assets.Scripts.TowerLogic
             _cannonYAxisRotator.DOLookAt(target.position, _towerModel.ShootInterval, AxisConstraint.Y);
             _cannonXAxixRotator.DOLookAt(target.position, _towerModel.ShootInterval);
 
-            var projectile = Instantiate(_towerModel.ProjectilePrefab, _shootPointOrigin.position, _shootPointOrigin.rotation);
+            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, _shootPointOrigin.position, Quaternion.identity).GetComponent<Projectile>();
 
             projectile.Target = target;
         }

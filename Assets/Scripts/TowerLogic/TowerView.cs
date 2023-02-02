@@ -19,12 +19,15 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                foreach (var monster in FindObjectsOfType<TargetView>())
+                foreach (var target in FindObjectsOfType<TargetView>())
                 {
-                    if (Vector3.Distance(transform.position, monster.transform.position) > _towerModel.Range)
+                    if (Vector3.Distance(transform.position, target.transform.position) > _towerModel.Range)
                         continue;
 
-                    Shoot(monster.transform);
+                    if (!target.gameObject.activeInHierarchy)
+                        continue;
+
+                    Shoot(target.transform);
                     break;
                 }
 

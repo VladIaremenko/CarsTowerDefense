@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Scripts.ProjectileLogic;
+using Assets.Scripts.TargetLogic;
 
 namespace Assets.Scripts.TowerLogic
 {
@@ -7,7 +8,10 @@ namespace Assets.Scripts.TowerLogic
     {
         public override void Shoot(Transform target)
         {
-            var projectile = Instantiate(_towerModel.ProjectilePrefab, _shootPointOrigin.position, Quaternion.identity);
+            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
+                _shootPointOrigin.position, 
+                Quaternion.identity).GetComponent<Projectile>();
+
             projectile.Target = target;
         }
     }
