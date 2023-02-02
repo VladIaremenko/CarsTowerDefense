@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.General;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.TargetLogic
@@ -15,7 +14,8 @@ namespace Assets.Scripts.TargetLogic
 
         private void Start ()
         {
-            _targetController = new TargetController(_targetModel = _factory.GetItemClone(_targetModel), this);
+            _targetModel = _factory.GetItemClone(_targetModel);
+            _targetController = new TargetController( _targetModel, this);
         }
 
         public void HandleDamage(int damage)
@@ -43,6 +43,7 @@ namespace Assets.Scripts.TargetLogic
 
         public void Destroy()
         {
+            Destroy(_targetModel);
             Destroy(gameObject);
         }
     }
