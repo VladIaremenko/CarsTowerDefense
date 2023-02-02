@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts.MonsterLogic
+namespace Assets.Scripts.TargetLogic
 {
-    public class Spawner : MonoBehaviour
+    public class TargetSpawner : MonoBehaviour
     {
         [SerializeField] private float _interval = 3;
-        [SerializeField] private Transform _moveTarget;
-        [SerializeField] private Monster _monsterPrefab;
+        [SerializeField] private Transform _targetMoveDestination;
+        [SerializeField] private TargetView _targetPrefab;
 
-        private void Start ()
+        private void Start()
         {
             StartCoroutine(SpawnCoroutine());
         }
@@ -18,10 +18,10 @@ namespace Assets.Scripts.MonsterLogic
         {
             while (true)
             {
-                var monster = Instantiate(_monsterPrefab, transform);
+                var monster = Instantiate(_targetPrefab, transform);
 
                 monster.transform.position = transform.position;
-                monster.MoveTarget = _moveTarget;
+                monster.MoveTarget = _targetMoveDestination;
 
                 yield return new WaitForSeconds(_interval);
             }

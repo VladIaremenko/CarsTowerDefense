@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.MonsterLogic;
+﻿using Assets.Scripts.TargetLogic;
 using UnityEngine;
 
 namespace Assets.Scripts.ProjectileLogic

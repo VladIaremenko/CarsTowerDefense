@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.MonsterLogic
+﻿namespace Assets.Scripts.TargetLogic
 {
     public interface IDamagable
     {

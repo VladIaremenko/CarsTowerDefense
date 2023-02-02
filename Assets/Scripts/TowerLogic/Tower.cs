@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.MonsterLogic;
-using Assets.Scripts.ProjectileLogic;
+﻿using Assets.Scripts.ProjectileLogic;
+using Assets.Scripts.TargetLogic;
 using System.Collections;
 using UnityEngine;
 
@@ -22,7 +22,7 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                foreach (var monster in FindObjectsOfType<Monster>())
+                foreach (var monster in FindObjectsOfType<TargetView>())
                 {
                     if (Vector3.Distance(transform.position, monster.transform.position) > _range)
                         continue;
