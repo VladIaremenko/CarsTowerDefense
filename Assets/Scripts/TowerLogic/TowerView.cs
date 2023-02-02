@@ -5,13 +5,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public abstract class Tower : MonoBehaviour
+    public abstract class TowerView : MonoBehaviour
     {
-        [SerializeField] protected float _shootInterval = 0.5f;
-        [SerializeField] protected float _range = 4f;
         [SerializeField] protected Transform _shootPointOrigin;
-
-        [SerializeField] protected Projectile _projectilePrefab;
+        [SerializeField] protected TowerModelSO _towerModel;
 
         private void Start()
         {
@@ -24,13 +21,14 @@ namespace Assets.Scripts.TowerLogic
             {
                 foreach (var monster in FindObjectsOfType<TargetView>())
                 {
-                    if (Vector3.Distance(transform.position, monster.transform.position) > _range)
+                    if (Vector3.Distance(transform.position, monster.transform.position) > _towerModel.Range)
                         continue;
 
                     Shoot(monster.transform);
+                    break;
                 }
 
-                yield return new WaitForSeconds(_shootInterval);
+                yield return new WaitForSeconds(_towerModel.ShootInterval);
             }
         }
 
