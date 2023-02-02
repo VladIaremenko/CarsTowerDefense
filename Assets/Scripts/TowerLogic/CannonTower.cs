@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
-using Assets.Scripts.ProjectileLogic;
+using UnityEngine.PlayerLoop;
 
 namespace Assets.Scripts.TowerLogic
 {
     public class CannonTower : Tower
     {
-        [SerializeField] private CannonProjectile _projectilePrefab;
-        [SerializeField] private Transform _canonYAxisRotator;
-        [SerializeField] private Transform _canonXAxixRotator;
+        [SerializeField] private Transform _cannonYAxisRotator;
+        [SerializeField] private Transform _cannonXAxixRotator;
 
         public override void Shoot(Transform target)
         {
-            _canonYAxisRotator.LookAt(target, Vector3.up);
+            _cannonYAxisRotator.LookAt(new Vector3(
+                target.position.x,
+                _cannonYAxisRotator.position.y,
+                target.position.z));
 
-            Instantiate(_projectilePrefab, _shootPointOrigin.position, _shootPointOrigin.rotation);
+            _cannonXAxixRotator.LookAt(target);
+
+            var projectile = Instantiate(_projectilePrefab, _shootPointOrigin.position, _shootPointOrigin.rotation);
+            projectile.Target = target;
         }
     }
 }

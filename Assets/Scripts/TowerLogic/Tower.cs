@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.MonsterLogic;
+using Assets.Scripts.ProjectileLogic;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Assets.Scripts.TowerLogic
         [SerializeField] protected float _shootInterval = 0.5f;
         [SerializeField] protected float _range = 4f;
         [SerializeField] protected Transform _shootPointOrigin;
+
+        [SerializeField] protected Projectile _projectilePrefab;
 
         private void Start()
         {

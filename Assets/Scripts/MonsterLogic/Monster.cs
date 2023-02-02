@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.MonsterLogic
 {
@@ -6,34 +7,28 @@ namespace Assets.Scripts.MonsterLogic
     {
         public Transform MoveTarget { get; set; }
 
-        public float m_speed = 0.1f;
-        public int m_maxHP = 30;
-        const float m_reachDistance = 0.3f;
+        public float _speed = 0.1f;
+        public int _maxHP = 30;
+        private const float _reachDistance = 0.3f;
 
         public int m_hp;
 
-        void Start()
+        private void Start()
         {
-            m_hp = m_maxHP;
+            m_hp = _maxHP;
         }
 
-        void Update()
+        private void FixedUpdate()
         {
-            if (MoveTarget == null)
-                return;
-
-            if (Vector3.Distance(transform.position, MoveTarget.position) <= m_reachDistance)
+            if (Vector3.Distance(transform.position, MoveTarget.position) <= _reachDistance)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            var translation = MoveTarget.position - transform.position;
-            if (translation.magnitude > m_speed)
-            {
-                translation = translation.normalized * m_speed;
-            }
-            transform.Translate(translation);
+            transform.position = Vector3.MoveTowards(transform.position,
+                MoveTarget.position,
+                _speed * Time.fixedDeltaTime);
         }
 
         public void HandleDamage(int damage)
