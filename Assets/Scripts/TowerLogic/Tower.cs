@@ -24,13 +24,13 @@ namespace Assets.Scripts.TowerLogic
                     if (Vector3.Distance(transform.position, monster.transform.position) > _range)
                         continue;
 
-                    Shoot();
+                    Shoot(monster.transform);
                 }
 
                 yield return new WaitForSeconds(_shootInterval);
             }
         }
 
-        public abstract void Shoot();
+        public abstract void Shoot(Transform target);
     }
 }

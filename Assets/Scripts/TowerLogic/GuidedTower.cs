@@ -3,15 +3,14 @@ using Assets.Scripts.ProjectileLogic;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class SimpleTower : Tower
+    public class GuidedTower : Tower
     {
         [SerializeField] private GuidedProjectile _projectilePrefab;
 
-        public override void Shoot()
+        public override void Shoot(Transform target)
         {
-            // shot
             var projectile = Instantiate(_projectilePrefab, _shootPointOrigin.position, Quaternion.identity);
-            projectile.Target = monster.gameObject;
+            projectile.Target = target;
         }
     }
 }

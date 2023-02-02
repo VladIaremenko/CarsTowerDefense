@@ -14,14 +14,9 @@ namespace Assets.Scripts.ProjectileLogic
                 return;
             }
 
-            var translation = Target.position - transform.position;
-
-            if (translation.magnitude > _speed)
-            {
-                translation = translation.normalized * _speed;
-            }
-
-            transform.Translate(translation);
+            transform.position = Vector3.MoveTowards(transform.position, 
+                Target.position, 
+                _speed * Time.fixedDeltaTime);
         }
     }
 }

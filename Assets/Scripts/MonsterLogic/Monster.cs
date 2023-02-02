@@ -4,7 +4,8 @@ namespace Assets.Scripts.MonsterLogic
 {
     public class Monster : MonoBehaviour, IDamagable
     {
-        public GameObject _moveTarget;
+        public Transform MoveTarget { get; set; }
+
         public float m_speed = 0.1f;
         public int m_maxHP = 30;
         const float m_reachDistance = 0.3f;
@@ -18,16 +19,16 @@ namespace Assets.Scripts.MonsterLogic
 
         void Update()
         {
-            if (_moveTarget == null)
+            if (MoveTarget == null)
                 return;
 
-            if (Vector3.Distance(transform.position, _moveTarget.transform.position) <= m_reachDistance)
+            if (Vector3.Distance(transform.position, MoveTarget.position) <= m_reachDistance)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            var translation = _moveTarget.transform.position - transform.position;
+            var translation = MoveTarget.position - transform.position;
             if (translation.magnitude > m_speed)
             {
                 translation = translation.normalized * m_speed;

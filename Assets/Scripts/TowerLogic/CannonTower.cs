@@ -7,7 +7,7 @@ namespace Assets.Scripts.TowerLogic
     {
         [SerializeField] private CannonProjectile _projectilePrefab;
 
-        public override void Shoot()
+        public override void Shoot(Transform target)
         {
             Instantiate(_projectilePrefab, _shootPointOrigin.position, _shootPointOrigin.rotation);
         }
