@@ -11,7 +11,7 @@ namespace Assets.Scripts.TargetLogic
 
         private void Start ()
         {
-            _targetController = new(_targetModel, this);
+            _targetController = new TargetController(_targetModel, this);
         }
 
         private void FixedUpdate()
