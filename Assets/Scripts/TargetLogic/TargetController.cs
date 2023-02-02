@@ -13,13 +13,17 @@ namespace Assets.Scripts.TargetLogic
             _targetModel = targetModel;
             _targetView = targetView;
 
-            //_targetModel = _targetView.Instantiate(_targetModel);
             _targetModel.CurrentHP = _targetModel.MaxHP;
         }
 
         internal void HandleDamage(int damage)
         {
-            throw new NotImplementedException();
+            _targetModel.CurrentHP -= damage;
+
+            if (_targetModel.CurrentHP <= 0)
+            {
+                _targetView.Destroy();
+            }
         }
     }
 }

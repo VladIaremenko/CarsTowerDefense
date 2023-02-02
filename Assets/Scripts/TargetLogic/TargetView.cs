@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.General;
+using System;
+using UnityEngine;
 
 namespace Assets.Scripts.TargetLogic
 {
@@ -7,14 +9,26 @@ namespace Assets.Scripts.TargetLogic
         public Transform MoveTarget { get; set; }
 
         [SerializeField] private TargetModelSO _targetModel;
+        [SerializeField] private FactorySO _factory;
+
         private TargetController _targetController;
 
         private void Start ()
         {
-            _targetController = new TargetController(_targetModel, this);
+            _targetController = new TargetController(_targetModel = _factory.GetItemClone(_targetModel), this);
+        }
+
+        public void HandleDamage(int damage)
+        {
+            _targetController.HandleDamage(damage);
         }
 
         private void FixedUpdate()
+        {
+            Move();
+        }
+
+        private void Move()
         {
             if (Vector3.Distance(transform.position, MoveTarget.position) <= _targetModel._reachDistance)
             {
@@ -27,9 +41,9 @@ namespace Assets.Scripts.TargetLogic
                 _targetModel._speed * Time.fixedDeltaTime);
         }
 
-        public void HandleDamage(int damage)
+        public void Destroy()
         {
-            _targetController.HandleDamage(damage);
+            Destroy(gameObject);
         }
     }
 }
