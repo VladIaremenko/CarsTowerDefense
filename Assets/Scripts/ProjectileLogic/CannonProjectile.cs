@@ -6,7 +6,7 @@ namespace Assets.Scripts.ProjectileLogic
     {
         public override void Move()
         {
-            transform.Translate(transform.forward * _speed * Time.fixedDeltaTime);
+            transform.position += transform.forward * _speed * Time.fixedDeltaTime;
         }
     }
 }
