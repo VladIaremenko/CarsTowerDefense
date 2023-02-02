@@ -14,7 +14,7 @@ namespace Assets.Scripts.TowerLogic
             _cannonYAxisRotator.DOLookAt(target.position, _towerModel.ShootInterval, AxisConstraint.Y);
             _cannonXAxixRotator.DOLookAt(target.position, _towerModel.ShootInterval);
 
-            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, _shootPointOrigin.position, Quaternion.identity).GetComponent<Projectile>();
+            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, _shootPointOrigin.position, _shootPointOrigin.rotation).GetComponent<Projectile>();
 
             projectile.Target = target;
         }

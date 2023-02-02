@@ -23,11 +23,6 @@ namespace Assets.Scripts.TargetLogic
             _targetController?.Refresh();
         }
 
-        private void OnDestroy()
-        {
-            Destroy(_targetModel);
-        }
-
         public void HandleDamage(int damage)
         {
             _targetController.HandleDamage(damage);
