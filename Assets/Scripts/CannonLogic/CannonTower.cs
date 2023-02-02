@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.MonsterLogic;
 
 public class CannonTower : MonoBehaviour {
 	public float m_shootInterval = 0.5f;

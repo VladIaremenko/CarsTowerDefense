@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.MonsterLogic;
 
 public class Spawner : MonoBehaviour {
 	public float m_interval = 3;

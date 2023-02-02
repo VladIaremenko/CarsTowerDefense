@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Scripts.MonsterLogic;
 
-public class CannonProjectile : MonoBehaviour {
+public class GuidedProjectile : MonoBehaviour {
+	public GameObject m_target;
 	public float m_speed = 0.2f;
 	public int m_damage = 10;
 
 	void Update () {
-		var translation = transform.forward * m_speed;
+		if (m_target == null) {
+			Destroy (gameObject);
+			return;
+		}
+
+		var translation = m_target.transform.position - transform.position;
+		if (translation.magnitude > m_speed) {
+			translation = translation.normalized * m_speed;
+		}
 		transform.Translate (translation);
 	}
 
