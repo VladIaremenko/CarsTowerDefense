@@ -8,12 +8,23 @@ namespace Assets.Scripts.ProjectileLogic
         [SerializeField] protected float _speed = 0.2f;
         [SerializeField] protected int _damage = 10;
 
+        public Transform Target { get; set; }
+
         private void FixedUpdate()
         {
+            CheckIfTargetIsNul();
             Move();
         }
 
         public abstract void Move();
+
+        private void CheckIfTargetIsNul()
+        {
+            if (Target == null)
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void OnTriggerEnter(Collider other)
         {
