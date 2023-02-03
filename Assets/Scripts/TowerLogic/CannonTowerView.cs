@@ -9,12 +9,16 @@ namespace Assets.Scripts.TowerLogic
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;
 
+        public override void Aim(Transform target)
+        {
+            //_cannonYAxisRotator.LookAt(target);
+            _cannonXAxixRotator.LookAt(target);
+        }
         public override void Shoot(Transform target)
         {
-            _cannonYAxisRotator.DOLookAt(target.position, _towerModel.ShootInterval, AxisConstraint.Y);
-            _cannonXAxixRotator.DOLookAt(target.position, _towerModel.ShootInterval);
-
-            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, _shootPointOrigin.position, _shootPointOrigin.rotation).GetComponent<ProjectileView>();
+            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
+                _shootPointOrigin.position, 
+                _shootPointOrigin.rotation).GetComponent<ProjectileView>();
 
             projectile.Target = target;
         }
