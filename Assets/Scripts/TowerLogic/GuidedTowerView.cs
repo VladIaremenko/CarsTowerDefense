@@ -10,7 +10,7 @@ namespace Assets.Scripts.TowerLogic
         {
             var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
                 _shootPointOrigin.position, 
-                Quaternion.identity).GetComponent<Projectile>();
+                Quaternion.identity).GetComponent<ProjectileView>();
 
             projectile.Target = target;
         }

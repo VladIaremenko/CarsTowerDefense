@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.ProjectileLogic;
-using Assets.Scripts.TargetLogic;
+﻿using Assets.Scripts.TargetLogic;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
@@ -9,27 +9,22 @@ namespace Assets.Scripts.TowerLogic
     {
         [SerializeField] protected Transform _shootPointOrigin;
         [SerializeField] protected TowerModelSO _towerModel;
+        [SerializeField] protected TargetHolderSO _targetHolderSO;
 
         private void Start()
         {
-            StartCoroutine(ShootCouroutine());
+            StartCoroutine(FindTargetCoroutine());
         }
 
-        private IEnumerator ShootCouroutine()
+        private IEnumerator FindTargetCoroutine()
         {
             while (true)
             {
-                foreach (var target in FindObjectsOfType<TargetView>())
-                {
-                    if (Vector3.Distance(transform.position, target.transform.position) > _towerModel.Range)
-                        continue;
+                var availableTargets = _targetHolderSO.Targets.FindAll(x => Vector3.Distance(transform.position,
+                    x.transform.position) > _towerModel.Range &&
+                    x.gameObject.activeInHierarchy);
 
-                    if (!target.gameObject.activeInHierarchy)
-                        continue;
-
-                    Shoot(target.transform);
-                    break;
-                }
+                if (availableTargets.Count > 0) Shoot(availableTargets.First().transform);
 
                 yield return new WaitForSeconds(_towerModel.ShootInterval);
             }

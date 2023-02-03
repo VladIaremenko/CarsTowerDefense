@@ -9,6 +9,7 @@ namespace Assets.Scripts.TargetLogic
         [SerializeField] private TargetSpawnerModelSO _targetSpawnerModelSO;
         [SerializeField] private FactorySO _factorySO;
         [SerializeField] private Transform _targetMoveDestination;
+        [SerializeField] private TargetHolderSO _targetHolderSO;
 
         private void Start()
         {
@@ -24,6 +25,8 @@ namespace Assets.Scripts.TargetLogic
 
                 target.transform.position = transform.position;
                 target.MoveTarget = _targetMoveDestination;
+
+                _targetHolderSO.AddTarget(target);
 
                 yield return new WaitForSeconds(_targetSpawnerModelSO._interval);
             }

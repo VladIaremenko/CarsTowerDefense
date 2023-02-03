@@ -8,6 +8,6 @@ namespace Assets.Scripts.TowerLogic
     {
         public float ShootInterval = 0.5f;
         public float Range = 4f;
-        public  Projectile ProjectilePrefab;
+        public  ProjectileView ProjectilePrefab;
     }
 }

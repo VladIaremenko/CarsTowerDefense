@@ -1,14 +1,20 @@
-﻿using Assets.Scripts.TargetLogic;
+﻿using Assets.Scripts.General;
+using Assets.Scripts.TargetLogic;
 using UnityEngine;
 
 namespace Assets.Scripts.ProjectileLogic
 {
-    public abstract class Projectile : MonoBehaviour
+    public abstract class ProjectileView : MonoBehaviour
     {
-        [SerializeField] protected float _speed = 0.2f;
-        [SerializeField] protected int _damage = 10;
+        [SerializeField] protected ProjectileModelSO _projectileModelSO;
+        [SerializeField] private FactorySO _factorySO;
 
         public Transform Target { get; set; }
+
+        private void Awake()
+        {
+            _projectileModelSO = _factorySO.GetItemClone(_projectileModelSO);
+        }
 
         private void FixedUpdate()
         {
@@ -30,7 +36,7 @@ namespace Assets.Scripts.ProjectileLogic
         {
             if (other.TryGetComponent(out IDamagable damagable))
             {
-                damagable.HandleDamage(_damage);
+                damagable.HandleDamage(_projectileModelSO.Damage);
                 ObjectPooler.Destroy(gameObject);
             }
         }

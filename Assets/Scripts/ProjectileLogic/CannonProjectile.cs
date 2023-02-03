@@ -2,11 +2,11 @@
 
 namespace Assets.Scripts.ProjectileLogic
 {
-    public class CannonProjectile : Projectile
+    public class CannonProjectile : ProjectileView
     {
         public override void Move()
         {
-            transform.position += transform.forward * _speed * Time.fixedDeltaTime;
+            transform.position += transform.forward * _projectileModelSO.Speed * Time.fixedDeltaTime;
         }
     }
 }
