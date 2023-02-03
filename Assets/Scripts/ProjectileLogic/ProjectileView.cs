@@ -6,7 +6,7 @@ namespace Assets.Scripts.ProjectileLogic
 {
     public abstract class ProjectileView : MonoBehaviour
     {
-        [SerializeField] protected ProjectileModelSO _projectileModelSO;
+        [SerializeField] public ProjectileModelSO _projectileModelSO;
         [SerializeField] private FactorySO _factorySO;
 
         public Transform Target { get; set; }

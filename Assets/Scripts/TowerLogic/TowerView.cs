@@ -18,7 +18,10 @@ namespace Assets.Scripts.TowerLogic
         private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
 
         private Transform _currentTarget;
-        private bool _canShoot = true;
+
+        protected bool _isReloaded = true;
+        protected bool _isAimReady = false;
+
         private float _timeBeforeReloadCompleted;
 
         private void Start()
@@ -70,12 +73,12 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                if (_canShoot)
+                if (_isReloaded && _isAimReady)
                 {
                     if (_currentTarget != null)
                     {
                         Shoot(_currentTarget.transform);
-                        _canShoot = false;
+                        _isReloaded = false;
                         _timeBeforeReloadCompleted = _towerModel.ShootInterval;
                     }
                 }
@@ -85,7 +88,8 @@ namespace Assets.Scripts.TowerLogic
 
                     if (_timeBeforeReloadCompleted <= 0)
                     {
-                        _canShoot = true;
+                        _isReloaded = true;
+                        _timeBeforeReloadCompleted = 0;
                     }
                 }
 
@@ -107,6 +111,8 @@ namespace Assets.Scripts.TowerLogic
         }
 
         public abstract void Shoot(Transform target);
-        public virtual void Aim(Transform target) { }
+        public virtual void Aim(Transform target) {
+            _isAimReady = true;
+        }
     }
 }
