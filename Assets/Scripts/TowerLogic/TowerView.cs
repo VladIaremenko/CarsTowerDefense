@@ -1,7 +1,4 @@
-﻿using Assets.Scripts.TargetLogic;
-using System.Collections;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
