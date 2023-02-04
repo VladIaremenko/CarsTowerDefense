@@ -8,7 +8,7 @@ namespace Assets.Scripts.ProjectileLogic
         {
             transform.position = Vector3.MoveTowards(transform.position, 
                 Target.position, 
-                _projectileModelSO.Speed * Time.fixedDeltaTime);
+                Speed * Time.fixedDeltaTime);
         }
     }
 }

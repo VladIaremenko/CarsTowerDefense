@@ -52,8 +52,8 @@ namespace Assets.Scripts.TowerLogic
                 var collisionPosition = GameUtilities.PrecitatePosition(target.position,
                     _shootPointOrigin.position,
                     targetMoveDirection * GameUtilities.FixedUpdatesPerSeconds,
-                    15
-                    );
+                    _towerModel.ProjectilePrefab.Speed
+                    ); ;
 
                 futurePosition = collisionPosition;
             }

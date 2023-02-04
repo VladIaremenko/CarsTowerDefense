@@ -6,10 +6,12 @@ namespace Assets.Scripts.ProjectileLogic
 {
     public abstract class ProjectileView : MonoBehaviour
     {
-        [SerializeField] public ProjectileModelSO _projectileModelSO;
+        [SerializeField] private ProjectileModelSO _projectileModelSO;
         [SerializeField] private FactorySO _factorySO;
 
         public Transform Target { get; set; }
+
+        public float Speed => _projectileModelSO.Speed;
 
         private void Awake()
         {
