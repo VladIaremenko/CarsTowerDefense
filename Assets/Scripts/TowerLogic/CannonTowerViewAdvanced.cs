@@ -20,14 +20,13 @@ namespace Assets.Scripts.TowerLogic
         {
             if (_prevTarget == target)
             {
-                var speed = Vector3.Distance(_prevPosition, target.position);
-
                 var targetMoveDirection = target.position - _prevPosition;
 
                 var collisionPosition = GameUtilities.PrecitatePosition(target.position,
                     _shootPointOrigin.position,
+                    // 50 is FixedUpdates in seconds
                     targetMoveDirection * 50,
-                    30
+                    15
                     );
 
                 _shootItem.position = collisionPosition;
