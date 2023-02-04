@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.ProjectileLogic;
+using Assets.Scripts.TargetLogic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
@@ -10,5 +12,20 @@ namespace Assets.Scripts.TowerLogic
         public float Range = 4f;
         public float RotationSpeed = 5;
         public  ProjectileView ProjectilePrefab;
+
+        [HideInInspector]
+        public List<TargetView> AvailableTargets;
+        [HideInInspector]
+        public WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
+        [HideInInspector]
+        public WaitForFixedUpdate WaitForFixedUpdate = new WaitForFixedUpdate();
+        [HideInInspector]
+        public Transform CurrentTarget;
+        [HideInInspector]
+        public bool IsReloaded = true;
+        [HideInInspector]
+        public bool IsAimReady = false;
+        [HideInInspector]
+        public float TimeBeforeReloadCompleted;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.ProjectileLogic;
-using DG.Tweening;
 using UnityEngine;
-using UnityStandardAssets.ImageEffects;
 
 namespace Assets.Scripts.TowerLogic
 {
@@ -30,7 +28,7 @@ namespace Assets.Scripts.TowerLogic
 
             _cannonYAxisRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
-            _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
+            _towerModel.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 target.position - _cannonXAxixRotator.position) <= 1f;
         }
 

@@ -37,7 +37,7 @@ namespace Assets.Scripts.TowerLogic
 
             _cannonYAxisRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
-            _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
+            _towerModel.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 _futureTargetPredictedPosition.position - _cannonXAxixRotator.position) <= 1f;
         }
 
