@@ -1,50 +1,21 @@
-﻿using Assets.Scripts.General;
-using Assets.Scripts.TargetLogic;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.ProjectileLogic
 {
-    public abstract class ProjectileView : MonoBehaviour
+    public class ProjectileView : MonoBehaviour
     {
-        [SerializeField] protected ProjectileModelSO _projectileModelSO;
-        [SerializeField] private FactorySO _factorySO;
+        [SerializeField] private ProjectileController _projectileController;
 
-        public float Speed => _projectileModelSO.Speed;
+        public float Speed => _projectileController.Speed;
 
-        public abstract void Move();
-
-        private void Awake()
+        public void SetTarget(Transform target)
         {
-            _projectileModelSO = _factorySO.GetItemClone(_projectileModelSO);
-        }
-
-        public void Init(Transform target)
-        {
-            _projectileModelSO.Target = target;
-        }
-
-        private void FixedUpdate()
-        {
-            CheckIfTargetIsNul();
-            Move();
-        }
-
-        private void CheckIfTargetIsNul()
-        {
-            if (!_projectileModelSO.Target.gameObject.activeInHierarchy)
-            {
-                ObjectPooler.Destroy(gameObject);
-            }
+            _projectileController.Init(target);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IDamagable damagable))
-            {
-                damagable.HandleDamage(_projectileModelSO.Damage);
-                ObjectPooler.Destroy(gameObject);
-            }
+            _projectileController.HandleCollision(other);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.ProjectileLogic
 {
-    public class CannonProjectile : ProjectileView
+    public class CannonProjectileController : ProjectileController
     {
         public override void Move()
         {

@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.ProjectileLogic
 {
-    public class GuidedProjectile : ProjectileView
+    public class GuidedProjectileController : ProjectileController
     {
         public override void Move()
         {

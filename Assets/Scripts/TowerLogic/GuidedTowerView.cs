@@ -12,7 +12,7 @@ namespace Assets.Scripts.TowerLogic
                 _shootPointOrigin.position, 
                 Quaternion.identity).GetComponent<ProjectileView>();
 
-            projectile.Init(target);
+            projectile.SetTarget(target);
         }
     }
 }
