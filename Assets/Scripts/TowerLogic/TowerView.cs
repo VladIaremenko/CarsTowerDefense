@@ -93,7 +93,7 @@ namespace Assets.Scripts.TowerLogic
                     }
                 }
 
-                yield return new WaitForFixedUpdate();
+                yield return _waitForFixedUpdate;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Assets.Scripts.TowerLogic
                     Aim(_currentTarget.transform);
                 }
 
-                yield return new WaitForFixedUpdate();
+                yield return _waitForFixedUpdate;
             }
         }
 

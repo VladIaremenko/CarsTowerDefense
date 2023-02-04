@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Assets.Scripts.General;
-using System;
 
 namespace Assets.Scripts.TargetLogic
 {
