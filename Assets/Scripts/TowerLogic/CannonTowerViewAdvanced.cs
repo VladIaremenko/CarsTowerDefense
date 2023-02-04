@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ProjectileLogic;
+﻿using Assets.Scripts.Misc;
+using Assets.Scripts.ProjectileLogic;
 using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
@@ -21,14 +22,15 @@ namespace Assets.Scripts.TowerLogic
             {
                 var speed = Vector3.Distance(_prevPosition, target.position);
 
-                var distance = Vector3.Distance(_shootPointOrigin.position, target.position);
-
                 var targetMoveDirection = target.position - _prevPosition;
 
-                var closer = Vector3.Distance(_prevPosition, transform.position)
-                    >= Vector3.Distance(target.position, transform.position) ? 1.5f : 3f;
+                var collisionPosition = GameUtilities.PrecitatePosition(target.position,
+                    _shootPointOrigin.position,
+                    targetMoveDirection * 50,
+                    30
+                    );
 
-                _shootItem.position = targetMoveDirection * distance * closer * 25 / _towerModel.ProjectilePrefab._projectileModelSO.Speed + target.position;
+                _shootItem.position = collisionPosition;
             }
 
             _prevPosition = target.position;
