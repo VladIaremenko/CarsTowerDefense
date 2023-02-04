@@ -10,7 +10,7 @@ namespace Assets.Scripts.ProjectileLogic
         [SerializeField] protected ProjectileModelSO _projectileModelSO;
         [SerializeField] private FactorySO _factorySO;
 
-        private ProjectileView _projectileView;
+        protected ProjectileView _projectileView;
 
         public float Speed => _projectileModelSO.Speed;
 
@@ -20,7 +20,7 @@ namespace Assets.Scripts.ProjectileLogic
             _projectileModelSO = _factorySO.GetItemClone(_projectileModelSO);
         }
 
-        public void Init(Transform target)
+        public virtual void Init(Transform target)
         {
             _projectileModelSO.Target = target;
         }

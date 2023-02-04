@@ -68,7 +68,7 @@ namespace Assets.Scripts.TowerLogic
                 _towerView.ShootPointOrigin.position,
                 _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 
-            projectile.SetTarget(target);
+            projectile.Init(target);
         }
     }
 }

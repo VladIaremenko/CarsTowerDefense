@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Misc;
+using UnityEngine;
 
 namespace Assets.Scripts.ProjectileLogic
 {
@@ -6,9 +7,17 @@ namespace Assets.Scripts.ProjectileLogic
     {
         [SerializeField] private Rigidbody _rigidbody;
 
-        private void OnEnable()
+        public override void Init(Transform target)
         {
-            _rigidbody.AddForce(transform.forward * 10, ForceMode.Impulse);
+            base.Init(target);
+
+            var direction = Ballistics.HitTargetAtTime
+                (transform.position,
+                target.position,
+                new Vector3(0, -9.8f, 0), 
+                1);
+
+            _rigidbody.AddForce(direction, ForceMode.Impulse);
         }
 
         public override void Move()

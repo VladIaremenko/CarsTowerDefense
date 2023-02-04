@@ -8,7 +8,7 @@ namespace Assets.Scripts.ProjectileLogic
 
         public float Speed => _projectileController.Speed;
 
-        public void SetTarget(Transform target)
+        public void Init(Transform target)
         {
             _projectileController.Init(target);
         }
