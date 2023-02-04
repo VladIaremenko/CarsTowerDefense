@@ -7,7 +7,7 @@ namespace Assets.Scripts.ProjectileLogic
         public override void Move()
         {
             transform.position = Vector3.MoveTowards(transform.position, 
-                Target.position, 
+                _projectileModelSO.Target.position, 
                 Speed * Time.fixedDeltaTime);
         }
     }

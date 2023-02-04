@@ -9,5 +9,8 @@ namespace Assets.Scripts.ProjectileLogic
     {
         public float Speed = 0.2f;
         public int Damage = 10;
+
+        [HideInInspector]
+        public Transform Target;
     }
 }

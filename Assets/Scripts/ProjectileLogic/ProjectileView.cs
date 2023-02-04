@@ -1,21 +1,27 @@
 ﻿using Assets.Scripts.General;
 using Assets.Scripts.TargetLogic;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.ProjectileLogic
 {
     public abstract class ProjectileView : MonoBehaviour
     {
-        [SerializeField] private ProjectileModelSO _projectileModelSO;
+        [SerializeField] protected ProjectileModelSO _projectileModelSO;
         [SerializeField] private FactorySO _factorySO;
 
-        public Transform Target { get; set; }
-
         public float Speed => _projectileModelSO.Speed;
+
+        public abstract void Move();
 
         private void Awake()
         {
             _projectileModelSO = _factorySO.GetItemClone(_projectileModelSO);
+        }
+
+        public void Init(Transform target)
+        {
+            _projectileModelSO.Target = target;
         }
 
         private void FixedUpdate()
@@ -24,11 +30,9 @@ namespace Assets.Scripts.ProjectileLogic
             Move();
         }
 
-        public abstract void Move();
-
         private void CheckIfTargetIsNul()
         {
-            if (!Target.gameObject.activeInHierarchy)
+            if (!_projectileModelSO.Target.gameObject.activeInHierarchy)
             {
                 ObjectPooler.Destroy(gameObject);
             }
