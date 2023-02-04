@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using Assets.Scripts.ProjectileLogic;
-using Assets.Scripts.TargetLogic;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class GuidedTowerView : TowerView
+    public class GuidedTowerView : TowerController
     {
         public override void Shoot(Transform target)
         {
             var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
-                _shootPointOrigin.position, 
+                _towerView.ShootPointOrigin.position, 
                 Quaternion.identity).GetComponent<ProjectileView>();
 
             projectile.SetTarget(target);

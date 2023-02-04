@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerView : TowerView
+    public class CannonTowerView : TowerController
     {
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;
@@ -35,8 +35,8 @@ namespace Assets.Scripts.TowerLogic
         public override void Shoot(Transform target)
         {
             var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
-                _shootPointOrigin.position, 
-                _shootPointOrigin.rotation).GetComponent<ProjectileView>();
+                _towerView.ShootPointOrigin.position,
+                _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 
             projectile.SetTarget(target);
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerPredictiveAimingView : TowerView
+    public class CannonTowerPredictiveAimingView : TowerController
     {
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;
@@ -50,7 +50,7 @@ namespace Assets.Scripts.TowerLogic
                 var targetMoveDirection = target.position - _prevPosition;
 
                 var collisionPosition = GameUtilities.PrecitatePosition(target.position,
-                    _shootPointOrigin.position,
+                    _towerView.ShootPointOrigin.position,
                     targetMoveDirection * GameUtilities.FixedUpdatesPerSeconds,
                     _towerModel.ProjectilePrefab.Speed
                     ); ;
@@ -65,8 +65,8 @@ namespace Assets.Scripts.TowerLogic
         public override void Shoot(Transform target)
         {
             var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject,
-                _shootPointOrigin.position,
-                _shootPointOrigin.rotation).GetComponent<ProjectileView>();
+                _towerView.ShootPointOrigin.position,
+                _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 
             projectile.SetTarget(target);
         }
