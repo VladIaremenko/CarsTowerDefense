@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Assets.Scripts.TargetLogic
 {
     [RequireComponent(typeof(TargetView))]
-
     public class TargetController : MonoBehaviour
     {
         [SerializeField] private TargetModelSO _targetModel;

@@ -7,7 +7,7 @@ namespace Assets.Scripts.TargetLogic
     [CreateAssetMenu(fileName = "TargetSpawnerModelSO", menuName = "SO/Spawner/TargetSpawnerModelSO", order = 1)]
     public class TargetSpawnerModelSO : ScriptableObject
     {
-        public float _interval = 3;
-        public TargetView _targetPrefab;
+        public float Interval = 3;
+        public TargetView TargetPrefab;
     }
 }
