@@ -9,11 +9,11 @@ namespace Assets.Scripts.TowerLogic
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;
 
+        [SerializeField] private Transform _futureTargetPredictedPosition;
+
         private Vector3 _aimDirection;
         private Transform _prevTarget;
         private Vector3 _prevPosition;
-
-        [SerializeField] private Transform _futureTargetPredictedPosition;
 
         public override void Aim(Transform target)
         {
