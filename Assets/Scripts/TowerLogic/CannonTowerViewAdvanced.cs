@@ -14,36 +14,44 @@ namespace Assets.Scripts.TowerLogic
         private Transform _prevTarget;
         private Vector3 _prevPosition;
 
-        [SerializeField] private Transform _shootItem;
+        [SerializeField] private Transform _futureTargetPredictedPosition;
 
         public override void Aim(Transform target)
         {
+            PredictTargetPosition(target, out Vector3 predictedPosition);
+
+            _futureTargetPredictedPosition.position = predictedPosition;
+
+            _aimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward,
+                _futureTargetPredictedPosition.position - _cannonXAxixRotator.position,
+                _towerModel.RotationSpeed * Time.fixedDeltaTime,
+            0.0f);
+
+            _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
+
+            _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
+                _futureTargetPredictedPosition.position - _cannonXAxixRotator.position) <= 1f;
+        }
+
+        private void PredictTargetPosition(Transform target, out Vector3 futurePosition)
+        {
+            futurePosition = target.position;
+
             if (_prevTarget == target)
             {
                 var targetMoveDirection = target.position - _prevPosition;
 
                 var collisionPosition = GameUtilities.PrecitatePosition(target.position,
                     _shootPointOrigin.position,
-                    // 50 is FixedUpdates in seconds
-                    targetMoveDirection * 50,
+                    targetMoveDirection * GameUtilities.FixedUpdatesPerSeconds,
                     15
                     );
 
-                _shootItem.position = collisionPosition;
+                futurePosition = collisionPosition;
             }
 
             _prevPosition = target.position;
             _prevTarget = target;
-
-            _aimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward,
-                _shootItem.position - _cannonXAxixRotator.position,
-                _towerModel.RotationSpeed * Time.fixedDeltaTime,
-            0.0f);
-
-            _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
-                _shootItem.position - _cannonXAxixRotator.position) <= 1f;
-
-            _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
         }
 
         public override void Shoot(Transform target)

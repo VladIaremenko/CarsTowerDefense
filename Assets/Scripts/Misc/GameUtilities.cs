@@ -4,6 +4,8 @@ namespace Assets.Scripts.Misc
 {
     public class GameUtilities
     {
+        public static readonly int FixedUpdatesPerSeconds = 50; 
+
         public static Vector3 PrecitatePosition(Vector3 targetPosition, Vector3 shooterPosition, Vector3 targetVelocity, float projectileSpeed)
         {
             Vector3 displacement = targetPosition - shooterPosition;
