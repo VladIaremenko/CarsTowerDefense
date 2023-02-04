@@ -9,5 +9,8 @@ namespace Assets.Scripts.TargetLogic
         public int MaxHP = 30;
         public float _reachDistance = 0.3f;
         public int CurrentHP;
+
+        [HideInInspector]
+        public Transform MoveTarget;
     }
 }
