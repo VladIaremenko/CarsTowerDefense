@@ -19,10 +19,19 @@ namespace Assets.Scripts.TowerLogic
                 _towerModel.RotationSpeed * Time.fixedDeltaTime,
             0.0f);
 
-            _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward, 
-                target.position - _cannonXAxixRotator.position) <= 1f;
-
             _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
+
+            _aimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
+                target.position - _cannonYAxisRotator.position,
+                _towerModel.RotationSpeed * Time.fixedDeltaTime,
+            0.0f);
+
+            _aimDirection.y = 0;
+
+            _cannonYAxisRotator.rotation = Quaternion.LookRotation(_aimDirection);
+
+            _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
+                target.position - _cannonXAxixRotator.position) <= 1f;
         }
 
         public override void Shoot(Transform target)

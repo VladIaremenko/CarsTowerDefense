@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerViewAdvanced : TowerView
+    public class CannonTowerPredictiveAimingView : TowerView
     {
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;
 
         private Vector3 _aimDirection;
-
         private Transform _prevTarget;
         private Vector3 _prevPosition;
 
@@ -28,6 +27,15 @@ namespace Assets.Scripts.TowerLogic
             0.0f);
 
             _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
+
+            _aimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
+                target.position - _cannonYAxisRotator.position,
+                _towerModel.RotationSpeed * Time.fixedDeltaTime,
+            0.0f);
+
+            _aimDirection.y = 0;
+
+            _cannonYAxisRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
             _isAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 _futureTargetPredictedPosition.position - _cannonXAxixRotator.position) <= 1f;
