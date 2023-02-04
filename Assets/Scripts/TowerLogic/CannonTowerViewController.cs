@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerView : TowerController
+    public class CannonTowerViewController : TowerController
     {
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;

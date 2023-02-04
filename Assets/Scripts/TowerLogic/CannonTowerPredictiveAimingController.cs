@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerPredictiveAimingView : TowerController
+    public class CannonTowerPredictiveAimingController : TowerController
     {
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;

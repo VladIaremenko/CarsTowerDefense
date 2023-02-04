@@ -3,7 +3,7 @@ using Assets.Scripts.ProjectileLogic;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class GuidedTowerView : TowerController
+    public class GuidedTowerController : TowerController
     {
         public override void Shoot(Transform target)
         {
