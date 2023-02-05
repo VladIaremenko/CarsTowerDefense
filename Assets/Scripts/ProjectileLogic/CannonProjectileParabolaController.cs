@@ -18,7 +18,10 @@ namespace Assets.Scripts.ProjectileLogic
                 3f);
 
             _rigidbody.velocity = Vector3.zero;
-            _rigidbody.AddForce(direction, ForceMode.Impulse);
+
+            var force = transform.InverseTransformDirection(direction).z;
+
+            _rigidbody.AddForce(transform.forward * force, ForceMode.Impulse);
         }
 
         public override void Move()
