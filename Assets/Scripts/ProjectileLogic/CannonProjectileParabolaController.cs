@@ -15,14 +15,15 @@ namespace Assets.Scripts.ProjectileLogic
                 (transform.position,
                 target.position,
                 new Vector3(0, -9.8f, 0), 
-                1);
+                3f);
 
+            _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(direction, ForceMode.Impulse);
         }
 
         public override void Move()
         {
-           
+
         }
     }
 }
