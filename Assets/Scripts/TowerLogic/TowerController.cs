@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.General;
+using Assets.Scripts.ProjectileLogic;
 using Assets.Scripts.TargetLogic;
 using System.Collections;
 using System.Linq;
@@ -109,11 +110,18 @@ namespace Assets.Scripts.TowerLogic
             }
         }
 
-        protected abstract void Shoot(Transform target);
+        protected virtual void Shoot(Transform target)
+        {
+            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject,
+                _towerView.ShootPointOrigin.position,
+                Quaternion.identity).GetComponent<ProjectileView>();
+
+            projectile.Init(target);
+        }
+
         protected virtual void Aim(Transform target)
         {
             _towerModel.IsAimReady = true;
         }
-
     }
 }

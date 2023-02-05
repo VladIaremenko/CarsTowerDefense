@@ -50,14 +50,5 @@ namespace Assets.Scripts.TowerLogic
             Model.TargetPrevPosition = target.position;
             Model.PrevTarget = target;
         }
-
-        protected override void Shoot(Transform target)
-        {
-            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject,
-                _towerView.ShootPointOrigin.position,
-                _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
-
-            projectile.Init(target);
-        }
     }
 }
