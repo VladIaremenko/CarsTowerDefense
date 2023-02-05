@@ -10,48 +10,42 @@ namespace Assets.Scripts.TowerLogic
         [SerializeField] private Transform _cannonXAxixRotator;
         [SerializeField] private Transform _futureTargetPredictedPosition;
 
-        private Vector3 _aimDirection;
-        private Transform _prevTarget;
-        private Vector3 _prevPosition;
-        private Vector3 _projectileStartVelocity;
-        private float _projectilePushForce;
-
         protected override void Aim(Transform target)
         {
             PredictTargetPosition(target, out Vector3 predictedPosition);
 
             _futureTargetPredictedPosition.position = predictedPosition;
 
-            _projectileStartVelocity = Ballistics.HitTargetAtTime
+            Model._projectileStartVelocity = Ballistics.HitTargetAtTime
                     (_towerView.ShootPointOrigin.position,
                     predictedPosition,
                     Physics.gravity,
                     3f);
 
-            _aimDirection = _projectileStartVelocity.normalized;
+            Model.RequiredAimDirection = Model._projectileStartVelocity.normalized;
 
-            _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
+            _cannonXAxixRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
 
             Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
-                _aimDirection) <= 1f;
+                Model.RequiredAimDirection) <= 1f;
 
-            _projectilePushForce = _towerView.ShootPointOrigin.
-                InverseTransformDirection(_projectileStartVelocity).z;
+            Model._projectilePushForce = _towerView.ShootPointOrigin.
+                InverseTransformDirection(Model._projectileStartVelocity).z;
         }
 
         private void PredictTargetPosition(Transform target, out Vector3 futurePosition)
         {
             futurePosition = target.position;
 
-            if (_prevTarget == target)
+            if (Model.PrevTarget == target)
             {
-                var targetMoveDirection = target.position - _prevPosition;
+                var targetMoveDirection = target.position - Model.TargetPrevPosition;
 
                 futurePosition = targetMoveDirection * GameUtilities.FixedUpdatesPerSeconds * 3 + target.position;
             }
 
-            _prevPosition = target.position;
-            _prevTarget = target;
+            Model.TargetPrevPosition = target.position;
+            Model.PrevTarget = target;
         }
 
         protected override void Shoot(Transform target)
@@ -65,7 +59,7 @@ namespace Assets.Scripts.TowerLogic
             var rigidbody = projectile.GetComponent<Rigidbody>();
 
             rigidbody.velocity = Vector3.zero;
-            rigidbody.AddForce(projectile.transform.forward * _projectilePushForce, ForceMode.Impulse);
+            rigidbody.AddForce(projectile.transform.forward * Model._projectilePushForce, ForceMode.Impulse);
         }
     }
 }

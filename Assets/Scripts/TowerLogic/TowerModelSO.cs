@@ -34,5 +34,10 @@ namespace Assets.Scripts.TowerLogic
         public Transform PrevTarget;
         [HideInInspector]
         public Vector3 TargetPrevPosition;
+
+        [HideInInspector]
+        public Vector3 _projectileStartVelocity;
+        [HideInInspector]
+        public float _projectilePushForce;
     }
 }
