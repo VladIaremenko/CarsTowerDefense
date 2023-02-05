@@ -28,14 +28,5 @@ namespace Assets.Scripts.TowerLogic
             Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                  requiredRotation) <= 1f;
         }
-
-        protected override void Shoot(Transform target)
-        {
-            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject,
-                _towerView.ShootPointOrigin.position,
-                _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
-
-            projectile.Init(target);
-        }
     }
 }

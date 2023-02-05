@@ -51,16 +51,12 @@ namespace Assets.Scripts.TowerLogic
 
         protected override void Shoot(Transform target)
         {
-            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject,
-                _towerView.ShootPointOrigin.position,
-                _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
+            base.Shoot(target);
 
-            projectile.Init(target);
-
-            var rigidbody = projectile.GetComponent<Rigidbody>();
+            var rigidbody = Model.ProjectileView.GetComponent<Rigidbody>();
 
             rigidbody.velocity = Vector3.zero;
-            rigidbody.AddForce(projectile.transform.forward * Model.ProjectilePushForce, ForceMode.Impulse);
+            rigidbody.AddForce(Model.ProjectileView.transform.forward * Model.ProjectilePushForce, ForceMode.Impulse);
         }
     }
 }
