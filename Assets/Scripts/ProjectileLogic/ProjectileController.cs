@@ -20,7 +20,7 @@ namespace Assets.Scripts.ProjectileLogic
             _projectileModelSO = _factorySO.GetItemClone(_projectileModelSO);
         }
 
-        public virtual void Init(Transform target)
+        public void Init(Transform target)
         {
             _projectileModelSO.Target = target;
         }

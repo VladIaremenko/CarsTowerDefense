@@ -14,6 +14,8 @@ namespace Assets.Scripts.TowerLogic
         private Vector3 _aimDirection;
         private Transform _prevTarget;
         private Vector3 _prevPosition;
+        private Vector3 _projectileStartVelocity;
+        private float _projectilePushForce;
 
         public override void Aim(Transform target)
         {
@@ -21,19 +23,23 @@ namespace Assets.Scripts.TowerLogic
 
             _futureTargetPredictedPosition.position = predictedPosition;
 
-            var direction = Ballistics.HitTargetAtTime
+            _projectileStartVelocity = Ballistics.HitTargetAtTime
                     (_towerView.ShootPointOrigin.position,
                     predictedPosition,
                     new Vector3(0, -9.8f, 0),
                     3f);
 
-
-            _aimDirection = direction.normalized;
+            _aimDirection = _projectileStartVelocity.normalized;
 
             _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
             _towerModel.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 _aimDirection) <= 1f;
+
+            Debug.Log(_towerView.ShootPointOrigin.InverseTransformDirection(_projectileStartVelocity));
+
+            _projectilePushForce = _towerView.ShootPointOrigin.
+                InverseTransformDirection(_projectileStartVelocity).z;
         }
 
         private void PredictTargetPosition(Transform target, out Vector3 futurePosition)
@@ -57,7 +63,12 @@ namespace Assets.Scripts.TowerLogic
                 _towerView.ShootPointOrigin.position,
                 _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 
-            projectile.Init(_futureTargetPredictedPosition);
+            projectile.Init(target);
+
+            var rigidbody = projectile.GetComponent<Rigidbody>();
+
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.AddForce(projectile.transform.forward * _projectilePushForce, ForceMode.Impulse);
         }
     }
 }
