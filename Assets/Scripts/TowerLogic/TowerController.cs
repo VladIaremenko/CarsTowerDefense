@@ -16,12 +16,12 @@ namespace Assets.Scripts.TowerLogic
         [SerializeField] private FactorySO _factorySO;
 
         protected TowerView _towerView;
-        protected TowerModelSO Model => _towerModel;
+        protected TowerModelSO Model { get=> _towerModel; set { _towerModel = value; } }
 
         private void Awake()
         {
             _towerView = GetComponent<TowerView>();
-            _towerModel = _factorySO.GetItemClone(_towerModel);
+            Model = _factorySO.GetItemClone(Model);
         }
 
         private void Start()
@@ -36,19 +36,19 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                if (_towerModel.CurrentTarget == null)
+                if (Model.CurrentTarget == null)
                 {
-                    _towerModel.AvailableTargets = _targetHolderSO.Targets.FindAll(x => Vector3.Distance(transform.position,
-                        x.transform.position) <= _towerModel.Range &&
+                    Model.AvailableTargets = _targetHolderSO.Targets.FindAll(x => Vector3.Distance(transform.position,
+                        x.transform.position) <= Model.Range &&
                         x.gameObject.activeInHierarchy);
 
-                    if (_towerModel.AvailableTargets.Count > 0)
+                    if (Model.AvailableTargets.Count > 0)
                     {
-                        _towerModel.CurrentTarget = _towerModel.AvailableTargets.First().transform;
+                        Model.CurrentTarget = Model.AvailableTargets.First().transform;
                     };
                 }
 
-                yield return _towerModel.WaitForEndOfFrame;
+                yield return Model.WaitForEndOfFrame;
             }
         }
 
@@ -56,16 +56,16 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                if (_towerModel.CurrentTarget != null)
+                if (Model.CurrentTarget != null)
                 {
-                    if (Vector3.Distance(transform.position, _towerModel.CurrentTarget.position) > _towerModel.Range
-                        || !_towerModel.CurrentTarget.gameObject.activeInHierarchy)
+                    if (Vector3.Distance(transform.position, Model.CurrentTarget.position) > Model.Range
+                        || !Model.CurrentTarget.gameObject.activeInHierarchy)
                     {
-                        _towerModel.CurrentTarget = null;
+                        Model.CurrentTarget = null;
                     }
                 }
 
-                yield return _towerModel.WaitForEndOfFrame;
+                yield return Model.WaitForEndOfFrame;
             }
         }
 
@@ -73,27 +73,27 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                if (_towerModel.IsReloaded && _towerModel.IsAimReady)
+                if (Model.IsReloaded && Model.IsAimReady)
                 {
-                    if (_towerModel.CurrentTarget != null)
+                    if (Model.CurrentTarget != null)
                     {
-                        Shoot(_towerModel.CurrentTarget.transform);
-                        _towerModel.IsReloaded = false;
-                        _towerModel.TimeBeforeReloadCompleted = _towerModel.ShootInterval;
+                        Shoot(Model.CurrentTarget.transform);
+                        Model.IsReloaded = false;
+                        Model.TimeBeforeReloadCompleted = Model.ShootInterval;
                     }
                 }
                 else
                 {
-                    _towerModel.TimeBeforeReloadCompleted -= Time.deltaTime;
+                    Model.TimeBeforeReloadCompleted -= Time.deltaTime;
 
-                    if (_towerModel.TimeBeforeReloadCompleted <= 0)
+                    if (Model.TimeBeforeReloadCompleted <= 0)
                     {
-                        _towerModel.IsReloaded = true;
-                        _towerModel.TimeBeforeReloadCompleted = 0;
+                        Model.IsReloaded = true;
+                        Model.TimeBeforeReloadCompleted = 0;
                     }
                 }
 
-                yield return _towerModel.WaitForFixedUpdate;
+                yield return Model.WaitForFixedUpdate;
             }
         }
 
@@ -101,12 +101,12 @@ namespace Assets.Scripts.TowerLogic
         {
             while (true)
             {
-                if (_towerModel.CurrentTarget != null)
+                if (Model.CurrentTarget != null)
                 {
-                    Aim(_towerModel.CurrentTarget.transform);
+                    Aim(Model.CurrentTarget.transform);
                 }
 
-                yield return _towerModel.WaitForFixedUpdate;
+                yield return Model.WaitForFixedUpdate;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Assets.Scripts.TowerLogic
 
         protected virtual void Aim(Transform target)
         {
-            _towerModel.IsAimReady = true;
+            Model.IsAimReady = true;
         }
     }
 }
