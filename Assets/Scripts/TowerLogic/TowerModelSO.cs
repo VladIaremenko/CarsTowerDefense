@@ -16,6 +16,8 @@ namespace Assets.Scripts.TowerLogic
         [HideInInspector]
         public List<TargetView> AvailableTargets;
         [HideInInspector]
+        public ProjectileView ProjectileView;
+        [HideInInspector]
         public WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
         [HideInInspector]
         public WaitForFixedUpdate WaitForFixedUpdate = new WaitForFixedUpdate();

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Misc;
-using Assets.Scripts.ProjectileLogic;
 using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
@@ -20,15 +19,20 @@ namespace Assets.Scripts.TowerLogic
 
             if (Model.PrevTarget == target)
             {
-                _futureTargetPredictedPosition.position = GameUtilities.PrecitatePosition(target.position,
-                    _towerView.ShootPointOrigin.position,
-                    (target.position - Model.TargetPrevPosition) * GameUtilities.FixedUpdatesPerSeconds,
-                    Model.ProjectilePrefab.Speed
-                    );
+                FindTrajectoriesInterception(target);
             }
 
             Model.TargetPrevPosition = target.position;
             Model.PrevTarget = target;
+        }
+
+        private void FindTrajectoriesInterception(Transform target)
+        {
+            _futureTargetPredictedPosition.position = 
+                GameUtilities.PrecitatePosition(target.position,
+                _towerView.ShootPointOrigin.position,
+                (target.position - Model.TargetPrevPosition) * GameUtilities.FixedUpdatesPerSeconds,
+                Model.ProjectilePrefab.Speed);
         }
     }
 }

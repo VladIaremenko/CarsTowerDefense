@@ -28,15 +28,20 @@ namespace Assets.Scripts.TowerLogic
 
             if (Model.PrevTarget == target)
             {
-                _futureTargetPredictedPosition.position = 
-                    (target.position - Model.TargetPrevPosition)
-                    * GameUtilities.FixedUpdatesPerSeconds
-                    * CalculatePreferredTimeBeforeCollision(target)
-                    + target.position;
+                PredictTargetPositionInTime(target);
             }
 
             Model.TargetPrevPosition = target.position;
             Model.PrevTarget = target;
+        }
+
+        private void PredictTargetPositionInTime(Transform target)
+        {
+            _futureTargetPredictedPosition.position =
+                (target.position - Model.TargetPrevPosition)
+                * GameUtilities.FixedUpdatesPerSeconds
+                * CalculatePreferredTimeBeforeCollision(target)
+                + target.position;
         }
 
         private float CalculatePreferredTimeBeforeCollision(Transform target)

@@ -117,6 +117,7 @@ namespace Assets.Scripts.TowerLogic
                 Quaternion.identity).GetComponent<ProjectileView>();
 
             projectile.Init(target);
+            Model.ProjectileView = projectile;
         }
 
         protected virtual void Aim(Transform target)
