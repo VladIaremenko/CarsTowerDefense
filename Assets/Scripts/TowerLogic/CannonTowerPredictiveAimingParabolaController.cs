@@ -8,7 +8,6 @@ namespace Assets.Scripts.TowerLogic
     {
         [SerializeField] private Transform _cannonYAxisRotator;
         [SerializeField] private Transform _cannonXAxixRotator;
-
         [SerializeField] private Transform _futureTargetPredictedPosition;
 
         private Vector3 _aimDirection;
@@ -26,7 +25,7 @@ namespace Assets.Scripts.TowerLogic
             _projectileStartVelocity = Ballistics.HitTargetAtTime
                     (_towerView.ShootPointOrigin.position,
                     predictedPosition,
-                    new Vector3(0, -9.8f, 0),
+                    Physics.gravity,
                     3f);
 
             _aimDirection = _projectileStartVelocity.normalized;
@@ -35,8 +34,6 @@ namespace Assets.Scripts.TowerLogic
 
             _towerModel.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 _aimDirection) <= 1f;
-
-            Debug.Log(_towerView.ShootPointOrigin.InverseTransformDirection(_projectileStartVelocity));
 
             _projectilePushForce = _towerView.ShootPointOrigin.
                 InverseTransformDirection(_projectileStartVelocity).z;
