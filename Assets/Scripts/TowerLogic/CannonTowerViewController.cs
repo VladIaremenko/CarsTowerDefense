@@ -5,28 +5,26 @@ namespace Assets.Scripts.TowerLogic
 {
     public class CannonTowerViewController : TowerController
     {
-        [SerializeField] private Transform _cannonYAxisRotator;
-        [SerializeField] private Transform _cannonXAxixRotator;
-
-        private Vector3 _aimDirection;
+        [SerializeField] protected Transform _cannonYAxisRotator;
+        [SerializeField] protected Transform _cannonXAxixRotator;
 
         protected override void Aim(Transform target)
         {
-            _aimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward, 
-                target.position - _cannonXAxixRotator.position,
-                Model.RotationSpeed * Time.fixedDeltaTime,
-            0.0f);
+            Model.RequiredAimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward,
+               target.position - _cannonXAxixRotator.position,
+               Model.RotationSpeed * Time.fixedDeltaTime,
+                0.0f);
 
-            _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
+            _cannonXAxixRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
 
-            _aimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
+            Model.RequiredAimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
                 target.position - _cannonYAxisRotator.position,
                 Model.RotationSpeed * Time.fixedDeltaTime,
             0.0f);
 
-            _aimDirection.y = 0;
+            Model.RequiredAimDirection.y = 0;
 
-            _cannonYAxisRotator.rotation = Quaternion.LookRotation(_aimDirection);
+            _cannonYAxisRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
 
             Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 target.position - _cannonXAxixRotator.position) <= 1f;
@@ -34,7 +32,7 @@ namespace Assets.Scripts.TowerLogic
 
         protected override void Shoot(Transform target)
         {
-            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject, 
+            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject,
                 _towerView.ShootPointOrigin.position,
                 _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 

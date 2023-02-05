@@ -4,12 +4,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerPredictiveAimingController : TowerController
+    public class CannonTowerPredictiveAimingController : CannonTowerViewController
     {
-        [SerializeField] private Transform _cannonYAxisRotator;
-        [SerializeField] private Transform _cannonXAxixRotator;
-
-        [SerializeField] private Transform _futureTargetPredictedPosition;
+        [SerializeField] protected Transform _futureTargetPredictedPosition;
 
         protected override void Aim(Transform target)
         {
@@ -37,7 +34,7 @@ namespace Assets.Scripts.TowerLogic
                 _futureTargetPredictedPosition.position - _cannonXAxixRotator.position) <= 1f;
         }
 
-        private void PredictTargetPosition(Transform target, out Vector3 futurePosition)
+        protected virtual void PredictTargetPosition(Transform target, out Vector3 futurePosition)
         {
             futurePosition = target.position;
 

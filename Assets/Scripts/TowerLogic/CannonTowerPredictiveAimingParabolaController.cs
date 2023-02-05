@@ -4,12 +4,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerPredictiveAimingParabolaController : TowerController
+    public class CannonTowerPredictiveAimingParabolaController : CannonTowerPredictiveAimingController
     {
-        [SerializeField] private Transform _cannonYAxisRotator;
-        [SerializeField] private Transform _cannonXAxixRotator;
-        [SerializeField] private Transform _futureTargetPredictedPosition;
-
         protected override void Aim(Transform target)
         {
             PredictTargetPosition(target, out Vector3 predictedPosition);
@@ -45,7 +41,7 @@ namespace Assets.Scripts.TowerLogic
                 InverseTransformDirection(Model.ProjectileStartVelocity).z;
         }
 
-        private void PredictTargetPosition(Transform target, out Vector3 futurePosition)
+        protected override void PredictTargetPosition(Transform target, out Vector3 futurePosition)
         {
             futurePosition = target.position;
 
