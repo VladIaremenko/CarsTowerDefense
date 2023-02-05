@@ -39,5 +39,7 @@ namespace Assets.Scripts.TowerLogic
         public Vector3 ProjectileStartVelocity;
         [HideInInspector]
         public float ProjectilePushForce;
+        [HideInInspector]
+        public Vector3 NewDirection;
     }
 }
