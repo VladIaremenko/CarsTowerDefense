@@ -11,7 +11,7 @@ namespace Assets.Scripts.TowerLogic
         public float ShootInterval = 0.5f;
         public float Range = 4f;
         public float RotationSpeed = 5;
-        public  ProjectileView ProjectilePrefab;
+        public ProjectileView ProjectilePrefab;
 
         [HideInInspector]
         public List<TargetView> AvailableTargets;
@@ -27,5 +27,12 @@ namespace Assets.Scripts.TowerLogic
         public bool IsAimReady = false;
         [HideInInspector]
         public float TimeBeforeReloadCompleted;
+
+        [HideInInspector]
+        public Vector3 RequiredAimDirection;
+        [HideInInspector]
+        public Transform PrevTarget;
+        [HideInInspector]
+        public Vector3 TargetPrevPosition;
     }
 }

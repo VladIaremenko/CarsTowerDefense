@@ -29,7 +29,7 @@ namespace Assets.Scripts.TargetLogic
 
             if (_targetModel.CurrentHP <= 0)
             {
-                Destroy(_targetView.gameObject);
+                ObjectPooler.Destroy(_targetView.gameObject);
             }
         }
 

@@ -10,31 +10,31 @@ namespace Assets.Scripts.TowerLogic
 
         private Vector3 _aimDirection;
 
-        public override void Aim(Transform target)
+        protected override void Aim(Transform target)
         {
             _aimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward, 
-                target.position - _cannonXAxixRotator.position, 
-                _towerModel.RotationSpeed * Time.fixedDeltaTime,
+                target.position - _cannonXAxixRotator.position,
+                Model.RotationSpeed * Time.fixedDeltaTime,
             0.0f);
 
             _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
             _aimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
                 target.position - _cannonYAxisRotator.position,
-                _towerModel.RotationSpeed * Time.fixedDeltaTime,
+                Model.RotationSpeed * Time.fixedDeltaTime,
             0.0f);
 
             _aimDirection.y = 0;
 
             _cannonYAxisRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
-            _towerModel.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
+            Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 target.position - _cannonXAxixRotator.position) <= 1f;
         }
 
-        public override void Shoot(Transform target)
+        protected override void Shoot(Transform target)
         {
-            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
+            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject, 
                 _towerView.ShootPointOrigin.position,
                 _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 

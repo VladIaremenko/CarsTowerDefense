@@ -5,9 +5,9 @@ namespace Assets.Scripts.TowerLogic
 {
     public class GuidedTowerController : TowerController
     {
-        public override void Shoot(Transform target)
+        protected override void Shoot(Transform target)
         {
-            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject, 
+            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject, 
                 _towerView.ShootPointOrigin.position, 
                 Quaternion.identity).GetComponent<ProjectileView>();
 

@@ -4,6 +4,7 @@ namespace Assets.Scripts.TargetLogic
 {
     public class TargetView : MonoBehaviour, IDamagable
     {
+        private TargetController _targetController;
         public Transform MoveTarget
         {
             set
@@ -11,8 +12,6 @@ namespace Assets.Scripts.TargetLogic
                 _targetController.SetTarget(value);
             }
         }
-
-        private TargetController _targetController;
 
         private void Awake()
         {

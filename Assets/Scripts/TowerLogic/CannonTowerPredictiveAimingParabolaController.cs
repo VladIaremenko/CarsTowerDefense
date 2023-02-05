@@ -16,7 +16,7 @@ namespace Assets.Scripts.TowerLogic
         private Vector3 _projectileStartVelocity;
         private float _projectilePushForce;
 
-        public override void Aim(Transform target)
+        protected override void Aim(Transform target)
         {
             PredictTargetPosition(target, out Vector3 predictedPosition);
 
@@ -32,7 +32,7 @@ namespace Assets.Scripts.TowerLogic
 
             _cannonXAxixRotator.rotation = Quaternion.LookRotation(_aimDirection);
 
-            _towerModel.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
+            Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 _aimDirection) <= 1f;
 
             _projectilePushForce = _towerView.ShootPointOrigin.
@@ -54,9 +54,9 @@ namespace Assets.Scripts.TowerLogic
             _prevTarget = target;
         }
 
-        public override void Shoot(Transform target)
+        protected override void Shoot(Transform target)
         {
-            var projectile = ObjectPooler.Generate(_towerModel.ProjectilePrefab.gameObject,
+            var projectile = ObjectPooler.Generate(Model.ProjectilePrefab.gameObject,
                 _towerView.ShootPointOrigin.position,
                 _towerView.ShootPointOrigin.rotation).GetComponent<ProjectileView>();
 

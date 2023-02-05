@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.TargetLogic;
+﻿using Assets.Scripts.General;
+using Assets.Scripts.TargetLogic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -8,14 +9,18 @@ namespace Assets.Scripts.TowerLogic
     [RequireComponent(typeof(TowerView))]
     public abstract class TowerController : MonoBehaviour
     {
-        [SerializeField] protected TowerModelSO _towerModel;
+        [SerializeField] private TowerModelSO _towerModel;
         [SerializeField] protected TargetHolderSO _targetHolderSO;
 
+        [SerializeField] private FactorySO _factorySO;
+
         protected TowerView _towerView;
+        protected TowerModelSO Model => _towerModel;
 
         private void Awake()
         {
             _towerView = GetComponent<TowerView>();
+            _towerModel = _factorySO.GetItemClone(_towerModel);
         }
 
         private void Start()
@@ -104,10 +109,11 @@ namespace Assets.Scripts.TowerLogic
             }
         }
 
-        public abstract void Shoot(Transform target);
-        public virtual void Aim(Transform target)
+        protected abstract void Shoot(Transform target);
+        protected virtual void Aim(Transform target)
         {
             _towerModel.IsAimReady = true;
         }
+
     }
 }
