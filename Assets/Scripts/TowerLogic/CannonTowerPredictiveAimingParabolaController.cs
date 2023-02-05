@@ -10,6 +10,8 @@ namespace Assets.Scripts.TowerLogic
         [SerializeField] private Transform _cannonXAxixRotator;
         [SerializeField] private Transform _futureTargetPredictedPosition;
 
+        private float _timeBeforeCollision;
+
         protected override void Aim(Transform target)
         {
             PredictTargetPosition(target, out Vector3 predictedPosition);
@@ -20,7 +22,7 @@ namespace Assets.Scripts.TowerLogic
                     (_towerView.ShootPointOrigin.position,
                     predictedPosition,
                     Physics.gravity,
-                    3f);
+                    CalculatePreferredTimeBeforeCollision(target));
 
             Model.RequiredAimDirection = Model._projectileStartVelocity.normalized;
 
@@ -41,11 +43,19 @@ namespace Assets.Scripts.TowerLogic
             {
                 var targetMoveDirection = target.position - Model.TargetPrevPosition;
 
-                futurePosition = targetMoveDirection * GameUtilities.FixedUpdatesPerSeconds * 3 + target.position;
+                futurePosition = targetMoveDirection 
+                    * GameUtilities.FixedUpdatesPerSeconds 
+                    * CalculatePreferredTimeBeforeCollision(target) 
+                    + target.position;
             }
 
             Model.TargetPrevPosition = target.position;
             Model.PrevTarget = target;
+        }
+
+        private float CalculatePreferredTimeBeforeCollision(Transform target)
+        {
+            return Mathf.Clamp(Vector3.Distance(target.position, transform.position), 1, 3);
         }
 
         protected override void Shoot(Transform target)
