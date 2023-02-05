@@ -18,24 +18,7 @@ namespace Assets.Scripts.TowerLogic
                     Physics.gravity,
                     CalculatePreferredTimeBeforeCollision(target));
 
-            Model.RequiredAimDirection = Model.ProjectileStartVelocity.normalized;
-
-            Model.NewDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward, 
-                Model.RequiredAimDirection, 
-                Model.RotationSpeed * Time.fixedDeltaTime, 0.0f);
-
-            _cannonXAxixRotator.rotation = Quaternion.LookRotation(Model.NewDirection);
-
-            Model.NewDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
-                Model.RequiredAimDirection,
-                Model.RotationSpeed * Time.fixedDeltaTime, 0.0f);
-
-            Model.NewDirection.y = 0;
-
-            _cannonYAxisRotator.rotation = Quaternion.LookRotation(Model.NewDirection);
-
-            Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
-                Model.RequiredAimDirection) <= 1f;
+            RotateTowardDirection(Model.ProjectileStartVelocity.normalized);
 
             Model.ProjectilePushForce = _towerView.ShootPointOrigin.
                 InverseTransformDirection(Model.ProjectileStartVelocity).z;

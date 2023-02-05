@@ -14,24 +14,7 @@ namespace Assets.Scripts.TowerLogic
 
             _futureTargetPredictedPosition.position = predictedPosition;
 
-            Model.RequiredAimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward,
-                _futureTargetPredictedPosition.position - _cannonXAxixRotator.position,
-                Model.RotationSpeed * Time.fixedDeltaTime,
-            0.0f);
-
-            _cannonXAxixRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
-
-            Model.RequiredAimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
-                target.position - _cannonYAxisRotator.position,
-                Model.RotationSpeed * Time.fixedDeltaTime,
-            0.0f);
-
-            Model.RequiredAimDirection.y = 0;
-
-            _cannonYAxisRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
-
-            Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
-                _futureTargetPredictedPosition.position - _cannonXAxixRotator.position) <= 1f;
+            RotateTowardDirection(_futureTargetPredictedPosition.position - _cannonXAxixRotator.position);
         }
 
         protected virtual void PredictTargetPosition(Transform target, out Vector3 futurePosition)
