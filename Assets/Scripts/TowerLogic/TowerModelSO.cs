@@ -36,8 +36,8 @@ namespace Assets.Scripts.TowerLogic
         public Vector3 TargetPrevPosition;
 
         [HideInInspector]
-        public Vector3 _projectileStartVelocity;
+        public Vector3 ProjectileStartVelocity;
         [HideInInspector]
-        public float _projectilePushForce;
+        public float ProjectilePushForce;
     }
 }
