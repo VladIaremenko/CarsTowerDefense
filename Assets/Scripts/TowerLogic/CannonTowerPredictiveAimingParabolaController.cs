@@ -8,13 +8,11 @@ namespace Assets.Scripts.TowerLogic
     {
         protected override void Aim(Transform target)
         {
-            PredictTargetPosition(target, out Vector3 predictedPosition);
-
-            _futureTargetPredictedPosition.position = predictedPosition;
+            PredictTargetPosition(target);
 
             Model.ProjectileStartVelocity = Ballistics.HitTargetAtTime
                     (_towerView.ShootPointOrigin.position,
-                    predictedPosition,
+                    _futureTargetPredictedPosition.position,
                     Physics.gravity,
                     CalculatePreferredTimeBeforeCollision(target));
 
@@ -24,17 +22,16 @@ namespace Assets.Scripts.TowerLogic
                 InverseTransformDirection(Model.ProjectileStartVelocity).z;
         }
 
-        protected override void PredictTargetPosition(Transform target, out Vector3 futurePosition)
+        protected override void PredictTargetPosition(Transform target)
         {
-            futurePosition = target.position;
+            _futureTargetPredictedPosition.position = target.position;
 
             if (Model.PrevTarget == target)
             {
-                var targetMoveDirection = target.position - Model.TargetPrevPosition;
-
-                futurePosition = targetMoveDirection 
-                    * GameUtilities.FixedUpdatesPerSeconds 
-                    * CalculatePreferredTimeBeforeCollision(target) 
+                _futureTargetPredictedPosition.position = 
+                    (target.position - Model.TargetPrevPosition)
+                    * GameUtilities.FixedUpdatesPerSeconds
+                    * CalculatePreferredTimeBeforeCollision(target)
                     + target.position;
             }
 

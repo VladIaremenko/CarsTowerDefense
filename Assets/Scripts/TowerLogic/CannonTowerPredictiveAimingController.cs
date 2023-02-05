@@ -10,20 +10,17 @@ namespace Assets.Scripts.TowerLogic
 
         protected override void Aim(Transform target)
         {
-            PredictTargetPosition(target, out Vector3 predictedPosition);
-
-            _futureTargetPredictedPosition.position = predictedPosition;
-
+            PredictTargetPosition(target);
             RotateTowardsDirection(_futureTargetPredictedPosition.position - _cannonXAxixRotator.position);
         }
 
-        protected virtual void PredictTargetPosition(Transform target, out Vector3 futurePosition)
+        protected virtual void PredictTargetPosition(Transform target)
         {
-            futurePosition = target.position;
+            _futureTargetPredictedPosition.position = target.position;
 
             if (Model.PrevTarget == target)
             {
-                futurePosition = GameUtilities.PrecitatePosition(target.position,
+                _futureTargetPredictedPosition.position = GameUtilities.PrecitatePosition(target.position,
                     _towerView.ShootPointOrigin.position,
                     (target.position - Model.TargetPrevPosition) * GameUtilities.FixedUpdatesPerSeconds,
                     Model.ProjectilePrefab.Speed
