@@ -24,7 +24,19 @@ namespace Assets.Scripts.TowerLogic
 
             Model.RequiredAimDirection = Model.ProjectileStartVelocity.normalized;
 
-            _cannonXAxixRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
+            Vector3 newDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward, 
+                Model.RequiredAimDirection, 
+                Model.RotationSpeed * Time.fixedDeltaTime, 0.0f);
+
+            _cannonXAxixRotator.rotation = Quaternion.LookRotation(newDirection);
+
+            newDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
+                Model.RequiredAimDirection,
+                Model.RotationSpeed * Time.fixedDeltaTime, 0.0f);
+
+            newDirection.y = 0;
+
+            _cannonYAxisRotator.rotation = Quaternion.LookRotation(newDirection);
 
             Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
                 Model.RequiredAimDirection) <= 1f;

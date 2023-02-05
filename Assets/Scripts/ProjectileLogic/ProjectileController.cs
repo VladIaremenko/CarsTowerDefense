@@ -25,13 +25,13 @@ namespace Assets.Scripts.ProjectileLogic
             _projectileModelSO.Target = target;
         }
 
-        public abstract void Move();
-
         private void FixedUpdate()
         {
             CheckIfTargetIsNull();
             Move();
         }
+
+        protected virtual void Move() { }
 
         private void CheckIfTargetIsNull()
         {
@@ -41,7 +41,7 @@ namespace Assets.Scripts.ProjectileLogic
             }
         }
 
-        internal void HandleCollision(Collider other)
+        public void HandleCollision(Collider other)
         {
             if (other.TryGetComponent(out IDamagable damagable))
             {
