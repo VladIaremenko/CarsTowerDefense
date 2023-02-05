@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.TowerLogic
 {
-    public class CannonTowerPredictiveAimingController : CannonTowerViewController
+    public class CannonTowerPredictiveAimingController : CannonTowerController
     {
         [SerializeField] protected Transform _futureTargetPredictedPosition;
 
