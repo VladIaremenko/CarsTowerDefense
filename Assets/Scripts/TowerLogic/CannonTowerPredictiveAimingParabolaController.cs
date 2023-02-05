@@ -18,7 +18,7 @@ namespace Assets.Scripts.TowerLogic
                     Physics.gravity,
                     CalculatePreferredTimeBeforeCollision(target));
 
-            RotateTowardDirection(Model.ProjectileStartVelocity.normalized);
+            RotateTowardsDirection(Model.ProjectileStartVelocity.normalized);
 
             Model.ProjectilePushForce = _towerView.ShootPointOrigin.
                 InverseTransformDirection(Model.ProjectileStartVelocity).z;

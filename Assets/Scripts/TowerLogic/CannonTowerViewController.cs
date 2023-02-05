@@ -10,29 +10,23 @@ namespace Assets.Scripts.TowerLogic
 
         protected override void Aim(Transform target)
         {
-            RotateTowardDirection(target.position - _cannonXAxixRotator.position);
+            RotateTowardsDirection(target.position - _cannonXAxixRotator.position);
         }
 
-        protected void RotateTowardDirection(Vector3 requiredDirection)
+        protected void RotateTowardsDirection(Vector3 requiredRotation)
         {
             Model.RequiredAimDirection = Vector3.RotateTowards(_cannonXAxixRotator.forward,
-               requiredDirection,
+               requiredRotation,
                Model.RotationSpeed * Time.fixedDeltaTime,
                0.0f);
 
             _cannonXAxixRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
 
-            Model.RequiredAimDirection = Vector3.RotateTowards(_cannonYAxisRotator.forward,
-                requiredDirection,
-                Model.RotationSpeed * Time.fixedDeltaTime,
-                0.0f);
-
-            Model.RequiredAimDirection.y = 0;
-
-            _cannonYAxisRotator.rotation = Quaternion.LookRotation(Model.RequiredAimDirection);
+            _cannonYAxisRotator.localRotation = Quaternion.Euler(
+                new Vector3(0, _cannonXAxixRotator.localEulerAngles.y, 0));
 
             Model.IsAimReady = Vector3.Angle(_cannonXAxixRotator.forward,
-                 requiredDirection) <= 1f;
+                 requiredRotation) <= 1f;
         }
 
         protected override void Shoot(Transform target)

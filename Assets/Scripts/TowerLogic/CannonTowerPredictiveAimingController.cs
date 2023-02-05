@@ -14,7 +14,7 @@ namespace Assets.Scripts.TowerLogic
 
             _futureTargetPredictedPosition.position = predictedPosition;
 
-            RotateTowardDirection(_futureTargetPredictedPosition.position - _cannonXAxixRotator.position);
+            RotateTowardsDirection(_futureTargetPredictedPosition.position - _cannonXAxixRotator.position);
         }
 
         protected virtual void PredictTargetPosition(Transform target, out Vector3 futurePosition)
